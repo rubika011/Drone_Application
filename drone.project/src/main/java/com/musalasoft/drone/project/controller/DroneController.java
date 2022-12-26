@@ -4,10 +4,14 @@ import com.musalasoft.drone.project.model.Drone;
 import com.musalasoft.drone.project.model.Medication;
 import com.musalasoft.drone.project.repository.DroneRepository;
 import com.musalasoft.drone.project.repository.MedicationRepository;
+import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class DroneController {
@@ -17,6 +21,19 @@ public class DroneController {
 
     @Autowired
     MedicationRepository medicationRepository;
+
+    @ExceptionHandler({
+            IllegalArgumentException.class
+    })
+    public ResponseEntity<Map<String, String>> handleException(IllegalArgumentException e) {
+
+        Map<String, String> errorResponse = Map.of(
+                "message", e.getLocalizedMessage(),
+                "status", HttpStatus.BAD_REQUEST.toString()
+        );
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
 
     @PostMapping("/registerDrone")
     public String registerDrone(@RequestBody Drone drone) {
