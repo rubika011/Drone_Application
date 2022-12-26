@@ -24,7 +24,7 @@ public class DroneRepositoryImpl implements CustomDroneRepo {
     public void addMedicationsToDrone(String serialNumber, List<Medication> medications) {
         if (droneRepository.findById(serialNumber).stream().iterator().hasNext()) {
             Drone drone = droneRepository.findById(serialNumber).stream().iterator().next();
-            drone.setState(DroneState.LOADING);
+            drone.setState(DroneState.LOADING.toString());
             droneRepository.save(drone);
             double maxWeight = drone.getWeight_limit();
             double totalWeight = 0;
@@ -37,7 +37,7 @@ public class DroneRepositoryImpl implements CustomDroneRepo {
                 medicationsAllowed.add(medication);
             }
             drone.setMedications(medicationsAllowed);
-            drone.setState(DroneState.LOADED);
+            drone.setState(DroneState.LOADED.toString());
             droneRepository.save(drone);
         }
         throw new NoSuchElementException("No drone with given serial number exist");

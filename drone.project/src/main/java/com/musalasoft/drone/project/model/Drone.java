@@ -5,8 +5,10 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name="drone")
 public class Drone {
 
+    @Id
     @Column(unique=true)
     private String serial_number;
 
@@ -16,18 +18,21 @@ public class Drone {
 
     private double battery_capacity;
 
-    private DroneState state;
+    private String state;
 
-    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY,
+    @OneToMany(mappedBy = "code", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private List<Medication> medications;
 
-    public Drone(String serial_number, String model, double weight_limit, double battery_capacity, DroneState state) {
+    public Drone() {
+    }
+
+    public Drone(String serial_number, String model, double weight_limit, double battery_capacity) {
         this.serial_number = serial_number;
         this.model = model;
         this.weight_limit = weight_limit;
         this.battery_capacity = battery_capacity;
-        this.state = state;
+        this.state = DroneState.IDLE.toString();
     }
 
     public String getSerial_number() {
@@ -36,7 +41,7 @@ public class Drone {
 
     public void setSerial_number(String serial_number) {
         if (serial_number.length() > 100) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Maximum characters allowed for serial number is 100");
         }
         this.serial_number = serial_number;
     }
@@ -50,7 +55,8 @@ public class Drone {
                 model.equalsIgnoreCase("Cruiserweight") || model.equalsIgnoreCase("Heavyweight")) {
             this.model = model;
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Model should be either of Lightweight, Middleweight, Cruiserweight, " +
+                    "Heavyweight");
         }
     }
 
@@ -60,7 +66,7 @@ public class Drone {
 
     public void setWeight_limit(double weight_limit) {
         if (weight_limit > 500) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Weight limit cannot exceed 500 grams");
         }
         this.weight_limit = weight_limit;
     }
@@ -71,17 +77,17 @@ public class Drone {
 
     public void setBattery_capacity(double battery_capacity) {
         if (battery_capacity < 0 || battery_capacity > 100) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Battery capacity should be in between 1 and 100");
         }
         this.battery_capacity = battery_capacity;
     }
 
-    public DroneState getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(DroneState state) {
-        this.state = state;
+    public void setState(String state) {
+        this.state = DroneState.valueOf(state).toString();
     }
 
     public List<Medication> getMedications() {

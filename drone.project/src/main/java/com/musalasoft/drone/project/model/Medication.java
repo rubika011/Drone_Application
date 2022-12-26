@@ -2,22 +2,30 @@ package com.musalasoft.drone.project.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 @Entity
+@Table(name="medication")
 public class Medication {
 
     private String name;
 
     private double weight;
 
+    @Id
     @Column(unique=true)
     private String code;
 
-    private BufferedImage image;
+    private byte[] image;
 
-    public Medication(String name, double weight, String code, BufferedImage image) {
+    public Medication() {
+    }
+
+    public Medication(String name, double weight, String code, byte[] image) {
         this.name = name;
         this.weight = weight;
         this.code = code;
@@ -32,7 +40,7 @@ public class Medication {
         if (name.matches("[a-zA-Z0-9-_]*")) {
             this.name = name;
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Letters, Numbers, '-' and '_' are only allowed for name");
         }
     }
 
@@ -42,7 +50,7 @@ public class Medication {
 
     public void setWeight(double weight) {
         if (weight < 0) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Weight cannot be less than 0");
         }
         this.weight = weight;
     }
@@ -55,15 +63,15 @@ public class Medication {
         if (code.matches("[A-Z0-9_]*")) {
             this.code = code;
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Capital Letters, Numbers and '_' are only allowed for code");
         }
     }
 
-    public BufferedImage getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(BufferedImage image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 }
