@@ -5,9 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-
 @Entity
 @Table(name="medication")
 public class Medication {

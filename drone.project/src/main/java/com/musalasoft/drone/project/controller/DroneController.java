@@ -41,12 +41,13 @@ public class DroneController {
         return "Drone registered successfully.";
     }
 
-    @PostMapping("/loadMedications")
-    public String loadMedications(@RequestBody String droneSerialNumber, List<Medication> medications) {
+    @PutMapping("/loadMedications/{serial_number}")
+    public String loadMedications(@PathVariable String serialNumber,
+                                  @RequestBody List<Medication> medications) {
         for(Medication medication: medications) {
             medicationRepository.save(medication);
         }
-        droneRepository.addMedicationsToDrone(droneSerialNumber, medications);
+        droneRepository.addMedicationsToDrone(serialNumber, medications);
         return "Medications loaded successfully.";
     }
 

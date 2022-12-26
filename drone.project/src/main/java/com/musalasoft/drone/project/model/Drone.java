@@ -20,8 +20,8 @@ public class Drone {
 
     private String state;
 
-    @OneToMany(mappedBy = "code", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "code")
     private List<Medication> medications;
 
     public Drone() {
