@@ -16,13 +16,13 @@ public class Drone {
 
     private double battery_capacity;
 
-    private String state;
+    private DroneState state;
 
     @OneToMany(mappedBy = "book", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private List<Medication> medications;
 
-    public Drone(String serial_number, String model, double weight_limit, double battery_capacity, String state) {
+    public Drone(String serial_number, String model, double weight_limit, double battery_capacity, DroneState state) {
         this.serial_number = serial_number;
         this.model = model;
         this.weight_limit = weight_limit;
@@ -76,18 +76,12 @@ public class Drone {
         this.battery_capacity = battery_capacity;
     }
 
-    public String getState() {
+    public DroneState getState() {
         return state;
     }
 
-    public void setState(String state) {
-        if(state.equalsIgnoreCase("IDLE") || state.equalsIgnoreCase("LOADING") ||
-                state.equalsIgnoreCase("DELIVERING") || state.equalsIgnoreCase("DELIVERED") ||
-                state.equalsIgnoreCase("RETURNING")) {
-            this.state = state;
-        } else {
-            throw new IllegalArgumentException();
-        }
+    public void setState(DroneState state) {
+        this.state = state;
     }
 
     public List<Medication> getMedications() {
