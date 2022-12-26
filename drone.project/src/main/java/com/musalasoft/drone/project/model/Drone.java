@@ -8,6 +8,8 @@ public class Drone {
     private String serial_number;
     private String model;
     private double weight_limit;
+    private double battery_capacity;
+    private String state;
 
     public Drone(String serial_number, String model, double weight_limit, double battery_capacity, String state) {
         this.serial_number = serial_number;
@@ -22,6 +24,9 @@ public class Drone {
     }
 
     public void setSerial_number(String serial_number) {
+        if (serial_number.length() > 100) {
+            throw new IllegalArgumentException();
+        }
         this.serial_number = serial_number;
     }
 
@@ -30,7 +35,12 @@ public class Drone {
     }
 
     public void setModel(String model) {
-        this.model = model;
+        if(model.equalsIgnoreCase("Lightweight") || model.equalsIgnoreCase("Middleweight") ||
+                model.equalsIgnoreCase("Cruiserweight") || model.equalsIgnoreCase("Heavyweight")) {
+            this.model = model;
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
 
     public double getWeight_limit() {
@@ -38,6 +48,9 @@ public class Drone {
     }
 
     public void setWeight_limit(double weight_limit) {
+        if (weight_limit > 500) {
+            throw new IllegalArgumentException();
+        }
         this.weight_limit = weight_limit;
     }
 
@@ -46,6 +59,9 @@ public class Drone {
     }
 
     public void setBattery_capacity(double battery_capacity) {
+        if (battery_capacity < 0 || battery_capacity > 100) {
+            throw new IllegalArgumentException();
+        }
         this.battery_capacity = battery_capacity;
     }
 
@@ -54,10 +70,13 @@ public class Drone {
     }
 
     public void setState(String state) {
-        this.state = state;
+        if(state.equalsIgnoreCase("IDLE") || state.equalsIgnoreCase("LOADING") ||
+                state.equalsIgnoreCase("DELIVERING") || state.equalsIgnoreCase("DELIVERED") ||
+                state.equalsIgnoreCase("RETURNING")) {
+            this.state = state;
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
-
-    private double battery_capacity;
-    private String state;
 
 }
