@@ -5,10 +5,7 @@ import com.musalasoft.drone.project.model.Medication;
 import com.musalasoft.drone.project.repository.DroneRepository;
 import com.musalasoft.drone.project.repository.MedicationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,5 +31,15 @@ public class DroneController {
         }
         droneRepository.addMedicationsToDrone(droneSerialNumber, medications);
         return "Medications loaded successfully.";
+    }
+
+    @GetMapping("/getLoadedMedications/{serial_number}")
+    public List<Medication> getLoadedMedications(@PathVariable("serial_number") String serialNumber) {
+        return droneRepository.getAllMedications(serialNumber);
+    }
+
+    @GetMapping("/getAvailableDrones")
+    public List<Drone> getAvailableDrones() {
+        return droneRepository.getAvailableDrones();
     }
 }

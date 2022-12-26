@@ -8,7 +8,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class DroneApplication {
 
 	public static void main(String[] args) {
-		ConfigurableApplicationContext configurableApplicationContext = SpringApplication.run(DroneApplication.class, args);
+		SpringApplication.run(DroneApplication.class, args);
 
 	}
 
