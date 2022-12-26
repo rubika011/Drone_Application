@@ -24,7 +24,11 @@ public class Medication {
     }
 
     public void setName(String name) {
-        this.name = name;
+        if (name.matches("[a-zA-Z0-9-_]*")) {
+            this.name = name;
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
 
     public double getWeight() {
@@ -32,6 +36,9 @@ public class Medication {
     }
 
     public void setWeight(double weight) {
+        if (weight < 0) {
+            throw new IllegalArgumentException();
+        }
         this.weight = weight;
     }
 
@@ -40,7 +47,11 @@ public class Medication {
     }
 
     public void setCode(String code) {
-        this.code = code;
+        if (code.matches("[A-Z0-9_]*")) {
+            this.code = code;
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
 
     public BufferedImage getImage() {
