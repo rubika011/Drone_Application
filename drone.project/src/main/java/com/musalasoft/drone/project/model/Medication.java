@@ -1,5 +1,6 @@
 package com.musalasoft.drone.project.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
 import java.awt.image.BufferedImage;
@@ -8,8 +9,12 @@ import java.awt.image.BufferedImage;
 public class Medication {
 
     private String name;
+
     private double weight;
+
+    @Column(unique=true)
     private String code;
+
     private BufferedImage image;
 
     public Medication(String name, double weight, String code, BufferedImage image) {

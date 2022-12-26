@@ -1,15 +1,26 @@
 package com.musalasoft.drone.project.model;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Drone {
 
+    @Column(unique=true)
     private String serial_number;
+
     private String model;
+
     private double weight_limit;
+
     private double battery_capacity;
+
     private String state;
+
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<Medication> medications;
 
     public Drone(String serial_number, String model, double weight_limit, double battery_capacity, String state) {
         this.serial_number = serial_number;
@@ -79,4 +90,11 @@ public class Drone {
         }
     }
 
+    public List<Medication> getMedications() {
+        return medications;
+    }
+
+    public void setMedications(List<Medication> medications) {
+        this.medications = medications;
+    }
 }
