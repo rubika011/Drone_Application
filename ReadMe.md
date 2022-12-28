@@ -33,6 +33,10 @@
 }
 ![img_2.png](images/RegisterDrone.PNG)
 
+- Sample Error when invalid attribute value provided.
+
+![img_3.png](images/ErrorMessage.PNG)
+
 #### 2.Loading a drone with medication items
 - URL: http://localhost:8080/loadMedications/TECH-123
 - Sample data:
@@ -53,19 +57,23 @@
 
 ![img_4.png](images/getLoadedMedications.PNG)
 
+- Sample Error when a non existing drone serial number given
+
+![img_5.png](images/NoElementFoundError.PNG)
+
 #### 4.checking available drones for loading
 - URL: http://localhost:8080/getAvailableDrones
 
-![img_4.png](images/getAvailableDrones.PNG)
+![img_6.png](images/getAvailableDrones.PNG)
 
 #### 5.check drone battery level for a given drone;
 - URL: http://localhost:8080/checkDroneBatteryLevel/FIX123456789
 
-![img_4.png](images/checkBatteryLevel.PNG)
+![img_7.png](images/checkBatteryLevel.PNG)
 
 ### Database
 
 Database can be accessed from http://localhost:8080/h2/ once the spring boot application started.
 - Click on Connect
-![img_5.png](images/database.PNG)
-![img_6.png](images/databaseTables.PNG)
+![img_8.png](images/database.PNG)
+![img_9.png](images/databaseTables.PNG)
