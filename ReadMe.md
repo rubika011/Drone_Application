@@ -1,6 +1,6 @@
 # Drone Application
 
-#### Technologies Used
+### Technologies Used
 - Java
 - Spring Boot
 - Maven
@@ -8,19 +8,19 @@
 - JPA
 - H2(In memory Database)
 
-#### Prerequisite:
+### Prerequisite:
 - Java 19
 - Intellij or Eclipse IDE
 - PostMan (for testing API)
 
-#### Build
+### Build
 - Clone the git repo https://github.com/rubika011/Drone_Application.git
 - Import the project in IDE and Run the spring boot application(double-click spring-boot:run)
 ![img_1.png](images/Springboot_run.PNG)
 
-#### Test API calls
+### Test API calls
 
-##### 1.Registering a drone
+#### 1.Registering a drone
     
 - URL: http://localhost:8080/registerDrone
 - Sample data:
@@ -33,7 +33,7 @@
 }
 ![img_2.png](images/RegisterDrone.PNG)
 
-##### 2.Loading a drone with medication items
+#### 2.Loading a drone with medication items
 - URL: http://localhost:8080/loadMedications/TECH-123
 - Sample data:
 [{
@@ -48,19 +48,24 @@
 }]
 ![img_3.png](images/LoadMedications.PNG)
 
-##### 3.checking loaded medication items for a given drone 
+#### 3.checking loaded medication items for a given drone 
 - URL: http://localhost:8080/getLoadedMedications/FIX123456789
 
 ![img_4.png](images/getLoadedMedications.PNG)
 
-##### 4.checking available drones for loading
+#### 4.checking available drones for loading
 - URL: http://localhost:8080/getAvailableDrones
 
 ![img_4.png](images/getAvailableDrones.PNG)
 
-##### 5.check drone battery level for a given drone;
+#### 5.check drone battery level for a given drone;
 - URL: http://localhost:8080/checkDroneBatteryLevel/FIX123456789
 
 ![img_4.png](images/checkBatteryLevel.PNG)
 
+### Database
 
+Database can be accessed from http://localhost:8080/h2/ once the spring boot application started.
+- Click on Connect
+![img_5.png](images/database.PNG)
+![img_6.png](images/databaseTables.PNG)
