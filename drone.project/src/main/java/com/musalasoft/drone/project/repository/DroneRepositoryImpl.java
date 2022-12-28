@@ -24,6 +24,10 @@ public class DroneRepositoryImpl implements CustomDroneRepo {
     public void addMedicationsToDrone(String serialNumber, List<Medication> medications) {
         if (droneRepository.findById(serialNumber).stream().iterator().hasNext()) {
             Drone drone = droneRepository.findById(serialNumber).stream().iterator().next();
+            if (drone.getState().equals(DroneState.LOADING.toString()) ||
+                    drone.getState().equals(DroneState.LOADED.toString())) {
+
+            }
             drone.setState(DroneState.LOADING.toString());
             droneRepository.save(drone);
             double maxWeight = drone.getWeight_limit();
@@ -59,4 +63,6 @@ public class DroneRepositoryImpl implements CustomDroneRepo {
         query.setParameter(1, DroneState.IDLE.toString());
         return query.getResultList() != null ? query.getResultList() : new ArrayList<>();
     }
+
+
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @RestController
 public class DroneController {
@@ -30,6 +31,19 @@ public class DroneController {
         Map<String, String> errorResponse = Map.of(
                 "message", e.getLocalizedMessage(),
                 "status", HttpStatus.BAD_REQUEST.toString()
+        );
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({
+            NoSuchElementException.class
+    })
+    public ResponseEntity<Map<String, String>> handleException(NoSuchElementException e) {
+
+        Map<String, String> errorResponse = Map.of(
+                "message", e.getLocalizedMessage(),
+                "status", HttpStatus.INTERNAL_SERVER_ERROR.toString()
         );
 
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
