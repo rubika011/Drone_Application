@@ -41,8 +41,8 @@ public class DroneController {
         return "Drone registered successfully.";
     }
 
-    @PutMapping("/loadMedications/{serial_number}")
-    public String loadMedications(@PathVariable String serialNumber,
+    @RequestMapping(value = "/loadMedications/{serial_number}", method=RequestMethod.PUT, consumes = "application/json")
+    public String loadMedications(@PathVariable("serial_number") String serialNumber,
                                   @RequestBody List<Medication> medications) {
         for(Medication medication: medications) {
             medicationRepository.save(medication);

@@ -21,7 +21,7 @@ public class Drone {
     private String state;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "code")
+    @JoinColumn(name = "serial_number")
     private List<Medication> medications;
 
     public Drone() {

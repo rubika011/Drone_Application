@@ -39,8 +39,9 @@ public class DroneRepositoryImpl implements CustomDroneRepo {
             drone.setMedications(medicationsAllowed);
             drone.setState(DroneState.LOADED.toString());
             droneRepository.save(drone);
+        } else {
+            throw new NoSuchElementException("No drone with given serial number exist");
         }
-        throw new NoSuchElementException("No drone with given serial number exist");
     }
 
     @Override
@@ -55,7 +56,7 @@ public class DroneRepositoryImpl implements CustomDroneRepo {
     @Override
     public List<Drone> getAvailableDrones() {
         Query query = entityManager.createNativeQuery("SELECT * FROM Drone WHERE state = ?", Drone.class);
-        query.setParameter(1, DroneState.IDLE);
-        return query.getResultList();
+        query.setParameter(1, DroneState.IDLE.toString());
+        return query.getResultList() != null ? query.getResultList() : new ArrayList<>();
     }
 }
