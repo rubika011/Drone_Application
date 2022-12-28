@@ -16,5 +16,4 @@
 ####Build
 - Clone the git repo https://github.com/rubika011/Drone_Application.git
 - Import the project in IDE and Run the spring boot application
-<img src="images/Springboot_run.PNG" title="Run Spring Boot Application">
 
