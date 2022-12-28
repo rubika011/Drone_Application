@@ -35,33 +35,3 @@
 
 ##### 2.Loading a drone with medication items
 
-- Sample URL: http://localhost:8080/loadMedications/TECH-123
-- Sample data:
-[{
-        "name": "Panadol",
-        "code": "PANADOL123",
-        "weight": 100
-    },
-    {
-        "name": "Amoxicilin",
-        "code": "AMOX123",
-        "weight": 100
-    }
- ]
- 
- ![img_3.png](images/LoadMedications.PNG)
- 
-##### 3.Checking loaded medication items for a given drone
-- Sample URL: http://localhost:8080/getLoadedMedications/FIX123456789
-
-![img_4.png](images/GetLoadedMedications.PNG)
-
-##### 4.Checking available drones for loading
-- Sample URL: http://localhost:8080/getAvailableDrones
-
-![img_5.png](images/getAvailableDrones.PNG)
-
-##### 5.Check drone battery level for a given drone
-- Sample URL: http://localhost:8080/checkDroneBatteryLevel/FIX123456789
-
-![img_6.png](images/checkBatteryLevel.PNG)
