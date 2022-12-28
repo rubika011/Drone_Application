@@ -13,12 +13,12 @@ import java.util.List;
 
 @EnableScheduling
 @EnableAsync
-public class CheckDroneBattery {
+public class CheckDroneBatteryScheduledService {
 
     @Autowired
     private DroneRepository droneRepository;
 
-    static final Logger log = LoggerFactory.getLogger(CheckDroneBattery.class);
+    static final Logger log = LoggerFactory.getLogger(CheckDroneBatteryScheduledService.class);
 
     @Scheduled(fixedRate = 3000)
     public void checkDroneBattery() throws InterruptedException {

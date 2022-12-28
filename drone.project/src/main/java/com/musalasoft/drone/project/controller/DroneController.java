@@ -2,13 +2,12 @@ package com.musalasoft.drone.project.controller;
 
 import com.musalasoft.drone.project.model.Drone;
 import com.musalasoft.drone.project.model.Medication;
-import com.musalasoft.drone.project.repository.DroneRepository;
-import com.musalasoft.drone.project.repository.MedicationRepository;
-import org.springframework.beans.TypeMismatchException;
+import com.musalasoft.drone.project.service.DroneServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.NotAcceptableStatusException;
 
 import java.util.List;
 import java.util.Map;
@@ -18,10 +17,7 @@ import java.util.NoSuchElementException;
 public class DroneController {
 
     @Autowired
-    DroneRepository droneRepository;
-
-    @Autowired
-    MedicationRepository medicationRepository;
+    private DroneServiceImpl droneService;
 
     @ExceptionHandler({
             IllegalArgumentException.class
@@ -37,9 +33,9 @@ public class DroneController {
     }
 
     @ExceptionHandler({
-            NoSuchElementException.class
+            NoSuchElementException.class, InternalError.class, NotAcceptableStatusException.class
     })
-    public ResponseEntity<Map<String, String>> handleException(NoSuchElementException e) {
+    public ResponseEntity<Map<String, String>> handleException(Exception e) {
 
         Map<String, String> errorResponse = Map.of(
                 "message", e.getLocalizedMessage(),
@@ -49,29 +45,33 @@ public class DroneController {
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
-    @PostMapping("/registerDrone")
+    @RequestMapping(value = "/registerDrone", method=RequestMethod.POST, consumes = "application/json")
     public String registerDrone(@RequestBody Drone drone) {
-        droneRepository.save(drone);
+        droneService.registerDrone(drone);
         return "Drone registered successfully.";
     }
 
     @RequestMapping(value = "/loadMedications/{serial_number}", method=RequestMethod.PUT, consumes = "application/json")
     public String loadMedications(@PathVariable("serial_number") String serialNumber,
                                   @RequestBody List<Medication> medications) {
-        for(Medication medication: medications) {
-            medicationRepository.save(medication);
-        }
-        droneRepository.addMedicationsToDrone(serialNumber, medications);
+        droneService.addMedicationsToDrone(serialNumber, medications);
         return "Medications loaded successfully.";
     }
 
-    @GetMapping("/getLoadedMedications/{serial_number}")
+    @RequestMapping(value = "/getLoadedMedications/{serial_number}", method=RequestMethod.GET,
+            produces = "application/json")
     public List<Medication> getLoadedMedications(@PathVariable("serial_number") String serialNumber) {
-        return droneRepository.getAllMedications(serialNumber);
+        return droneService.getAllMedications(serialNumber);
     }
 
-    @GetMapping("/getAvailableDrones")
+    @RequestMapping(value = "/getAvailableDrones", method=RequestMethod.GET, produces = "application/json")
     public List<Drone> getAvailableDrones() {
-        return droneRepository.getAvailableDrones();
+        return droneService.getAvailableDrones();
+    }
+
+    @RequestMapping(value = "/checkDroneBatteryLevel/{serial_number}", method=RequestMethod.GET,
+            produces = "application/json")
+    public double checkDroneBatteryLevel(@PathVariable("serial_number") String serialNumber) {
+        return droneService.checkDroneBatteryLevel(serialNumber);
     }
 }
